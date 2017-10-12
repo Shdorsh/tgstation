@@ -1,0 +1,39 @@
+/obj/effect/proc_holder/spell/aoe_turf/conjure/necropolis
+	name = "Conjure tendril"
+	desc = "Summons a necropolis tendril that spawns hostile creatures."
+	invocation = "Hii koh'mz"	//Zalgo reference
+	invocation_type = "whisper"
+	charge_max = 1300	//A little bit more than 2 minutes to recharge if no level
+	cooldown_min = 700	//20 seconds less every level
+	level_max = 3
+	action_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	action_icon_state = "goliath"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/necropolis/cast(list/targets,mob/user = usr)
+//A small window of vulnerability: Immovible during casting
+	if(do_after(user, 80-spell_level*10, target = user))
+		playsound(user.loc,'sound/effects/tendril_destroyed.ogg', 50, 1)
+	
+	//Randomize the type of tendrils
+		var/mob/living/simple_animal/hostile/spawner/lavaland/tendril = pick(typesof(/mob/living/simple_animal/hostile/spawner/lavaland))
+		tendril = new tendril
+		tendril.loc = user.loc
+	
+	//Make its strength scale depending on the spell level
+		tendril.name = "ethereal tendril"
+		tendril.spawn_time = 500-spell_level*100
+		tendril.maxHealth = spell_level*100
+		tendril.health = spell_level*100
+		tendril.max_mobs = 2+spell_level
+	
+	//Remove the chasm and add 1 lightning bolt to not nerf it too much
+		tendril.loot=list()
+//If no spell was used, give em bach the charge
+	else	charge_counter = charge_max
+
+/datum/spellbook_entry/conjuretendril
+	name = "Conjure tendril"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/necropolis
+	category = "Assistance"
+	desc = "Conjure a necropolis tendril that spawns hostile creatures. The tendril grows stronger and spawns faster with each level. WARNING: Creatures WILL attack the user aswell."
+	cost = 1
