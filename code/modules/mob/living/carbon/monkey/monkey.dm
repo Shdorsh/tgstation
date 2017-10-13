@@ -18,6 +18,10 @@
 
 
 /mob/living/carbon/monkey/Initialize()
+
+//Add one to the monkey cap
+	GLOB.monkeynum++
+
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
