@@ -25,8 +25,8 @@
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/carpmeat/New()
+	..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
@@ -114,8 +114,8 @@
 	tastes = list("meat" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/sausage/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/sausage/New()
+	..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/kebab
@@ -184,11 +184,12 @@
 	foodtype = MEAT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	visible_message("<span class='notice'>[src] expands!</span>")
-	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/carbon/monkey/bananas = new(drop_location())
-	bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG) 
-	qdel(src)
+	if(GLOB.monkeynum<GLOB.monkeycap)
+		visible_message("<span class='notice'>[src] expands!</span>")
+		new /mob/living/carbon/monkey(get_turf(src))
+		qdel(src)
+	else
+		visible_message("<span class='notice'>It seems the right conditions for its growth haven't been achieved...</span>")
 
 /obj/item/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
@@ -212,8 +213,8 @@
 	tastes = list("soy" = 1, "vegetables" = 1)
 	foodtype = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/stewedsoymeat/New()
+	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
@@ -257,8 +258,8 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/nugget/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/nugget/New()
+	..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
