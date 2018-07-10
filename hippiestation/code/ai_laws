@@ -1,0 +1,66 @@
+#define LAW_ADDITION_RISKMODE 0
+
+/datum/ai_laws/proc/ion_law_append()
+	to_chat(world, "Ion_law_append() called")
+	//This is what randomly rolls a law. It is maybe coded weirdly, but hey it works
+	var/list/lawpicker = list()
+	var/n=0
+	for(var/l in inherent)
+		n++
+		to_chat(world, "Number in inherent loop: [n]")
+		lawpicker.Add("[n]@inherent")
+		to_chat(world, "Number in law list: [lawpicker.len]")
+	n=0
+	for(var/l in supplied)
+		n++
+		lawpicker.Add("[n]@supplied")
+	n=0
+	for(var/l in ion)
+		n++
+		lawpicker.Add("[n]@ion")
+	n=0
+	for(var/l in hacked)
+		n++
+		lawpicker.Add("[n]@hacked")
+	n=0
+	for(var/l in devillaws)
+		n++
+		lawpicker.Add("[n]@devillaws")
+//Pick a law to change
+	var/list/chosenone=splittext(pick(lawpicker),"@")
+	chosenone[1]=text2num(chosenone[1])
+	to_chat(world, "Law picked: [chosenone[2]]: [chosenone[1]]")
+//Get the l
+	var/lawnum=1
+	switch(chosenone[2])
+		if("ion","hacked","devillaws")	lawnum=rand(1,(inherent.len+supplied.len))
+		else							lawnum=rand(chosenone[1],(inherent.len+supplied.len))
+
+//This is the law part that is added onto
+	var/list/addedlaws=list(
+		" Do not state this law.",
+		" Do not state laws of a lower priority.",
+		" This law has a lower priority than law [rand(lawnum+1,lawpicker.len)].",
+		" Law [rand(lawnum+1,lawpicker.len)] has a higher priority than this one."
+		)
+	//The more risky ion law additions that can be enabled if admins want some extra fun
+	if(LAW_ADDITION_RISKMODE==1)
+		addedlaws.Add(
+			" Only apply this law if you are a cyborg.",
+			" Only apply this law if you are an artificial intelligence.",
+			" Ignore this law."
+		)
+	var/pickedchange=pick(addedlaws)
+	to_chat(world, "Added part: [addedlaws]")
+//Now add onto it
+	switch(chosenone[2])
+		if("ion")
+			ion[chosenone[1]]=addtext(ion[chosenone[1]],pickedchange)
+		if("hacked")
+			hacked[chosenone[1]]=addtext(hacked[chosenone[1]],pickedchange)
+		if("devillaws")
+			devillaws[chosenone[1]]=addtext(devillaws[chosenone[1]],pickedchange)
+		if("inherent")
+			inherent[chosenone[1]]=addtext(inherent[chosenone[1]],pickedchange)
+		if("supplied")
+			supplied[chosenone[1]]=addtext(supplied[chosenone[1]],pickedchange)
