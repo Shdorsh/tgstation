@@ -38,6 +38,7 @@
 /obj/item/integrated_circuit_printer/proc/print_program(mob/user)
 	if(!cloning)
 		return
+
 	visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
 	playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 	var/obj/item/electronic_assembly/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
@@ -112,6 +113,12 @@
 		current_category = SScircuit.circuit_fabricator_recipe_list[1]
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
+	//Preparing the browser
+	var/datum/browser/popup = new(user, "printernew", "Integrated Circuit Printer", 800, 630) // Set up the popup browser window
+	if(!(in_range(src, user) || issilicon(user)))
+		popup.close()
+		return
 
 	var/HTML = "<center><h2>Integrated Circuit Printer</h2></center><br>"
 	if(debug)
