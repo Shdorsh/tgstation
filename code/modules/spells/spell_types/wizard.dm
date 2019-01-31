@@ -26,6 +26,7 @@
 
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_knockdown = 60
@@ -49,6 +50,8 @@
 
 	action_icon_state = "mutate"
 	sound = 'sound/magic/mutate.ogg'
+	rotten_spell = TRUE
+
 
 
 /obj/effect/proc_holder/spell/targeted/smoke
@@ -68,6 +71,7 @@
 	smoke_amt = 4
 
 	action_icon_state = "smoke"
+	rotten_spell = TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/smoke/lesser //Chaplain smoke book
@@ -101,6 +105,7 @@
 	emp_heavy = 6
 	emp_light = 10
 	sound = 'sound/magic/disable_tech.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
@@ -125,6 +130,7 @@
 	action_icon_state = "blink"
 	sound1 = 'sound/magic/blink.ogg'
 	sound2 = 'sound/magic/blink.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
 	name = "quickstep"
@@ -164,6 +170,7 @@
 	action_icon_state = "time"
 
 	summon_type = list(/obj/effect/timestop/wizard)
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -178,6 +185,7 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
+	rotten_spell = TRUE
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -211,6 +219,7 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -227,6 +236,7 @@
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
 	action_icon_state = "blind"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
@@ -260,6 +270,7 @@
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
 
 	action_icon_state = "repulse"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
 	var/list/thrownatoms = list()
@@ -304,6 +315,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -325,6 +337,7 @@
 	selection_type = "view"
 	action_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
@@ -339,6 +352,7 @@
 	clothes_req = 1
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
